@@ -2,8 +2,15 @@ from .models import Product, CartOrder, CartOrderItems, Category, WishList, Vend
 
 def default(request):
     categories = Category.objects.all()
-    address = Address.objects.get(user=request.user)
+    
+    try:
+        address = Address.objects.get(user=request.user)
+    except:
+        address = None
+    
     return {
+        'address': address, 
         'categories': categories,
-        'address': address,
     }
+        
+    

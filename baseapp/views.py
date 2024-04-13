@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from taggit.models import Tag
 
 from .models import Product, CartOrder, CartOrderItems, Category, WishList, Vendor, ProductImages, ProductReview, Address
 
@@ -64,11 +65,26 @@ def product_detail_view(request, pk):
     # products = Product.objects.filter(vendor=vendor, product_status="published")
     p_images = product.p_images.all()
     
+    products = Product.objects.filter(category=product.category).exclude(product_id=pk)
+    
     context = {
         'product': product,
         'p_images': p_images,
-        # 'products': products,
+        'products': products,
     }
     
     return render(request, 'baseapp/product-detail.html', context)
     
+def tag_list_view(request, tag_slug=None):
+    products = Product.objects.filter(product_status="published").order_by("-id")
+    tag = None 
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        products = products.filter(tags__in=[tag])
+    
+    context = {
+        "products": products, 
+        "tag": tag,
+    }
+    
+    return render(request, "baseapp/tag.html", context)

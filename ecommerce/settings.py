@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
+    # third party apps
+    "taggit",
+    "ckeditor",
 
     # local apps 
     "baseapp", 
@@ -150,3 +154,19 @@ JAZZMIN_SETTINGS = {
     'welcome_sign': "Welcome to the Admin site"
 }
 
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        'codeSnippet_theme': 'monokai', 
+        'toolbar': 'all', 
+        'extraPlugins': ','.join(
+            [
+                'codesnippet', 
+                'widget', 
+                'dialog',
+            ]
+        ),
+    }
+}
