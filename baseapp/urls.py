@@ -18,4 +18,8 @@ urlpatterns = [
     path("vendor/<pk>/", views.vendor_detail_view, name="vendor-detail"),
     
     path("products/tag/<slug:tag_slug>/", views.tag_list_view, name="tags"),
+    
+    path("add-review/<pk>/", views.ajax_add_review, name="ajax-add-review"),
+    
+    path("search/", views.search_view, name="search"),
 ]
